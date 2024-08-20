@@ -3,17 +3,15 @@
 #define SETTINGS_H
 
 // ---------------------- General settings ---------------------- //
-// Change the part in brackets to your Duino-Coin username
-extern char *DUCO_USER = "my_cool_username";
-// Change the part in brackets to your mining key (if you have set it in the wallet)
-extern char *MINER_KEY = "mySecretPass";
+// Change the part in brackets to your DragoCoin Wallet https://t.me/dragocoinbot
+extern char *DUCO_USER = "Wallet";
 // Change the part in brackets if you want to set a custom miner name
 // Use Auto to autogenerate, None for no custom identifier
 extern char *RIG_IDENTIFIER = "None";
 // Change the part in brackets to your WiFi name
-extern const char SSID[] = "SSID";
+extern const char SSID[] = "NAME";
 // Change the part in brackets to your WiFi password
-extern const char PASSWORD[] = "PASSW0RD";
+extern const char PASSWORD[] = "PASSWORD";
 // -------------------------------------------------------------- //
 
 // -------------------- Advanced options ------------------------ //

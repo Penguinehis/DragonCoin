@@ -35,7 +35,6 @@ struct MiningConfig {
     int port = 0;
     String DUCO_USER = "";
     String RIG_IDENTIFIER = "";
-    String MINER_KEY = "";
     String MINER_VER = SOFTWARE_VERSION;
     #if defined(ESP8266)
         // "High-band" 8266 diff
@@ -48,8 +47,8 @@ struct MiningConfig {
         String START_DIFF = "ESP32";
     #endif
 
-    MiningConfig(String DUCO_USER, String RIG_IDENTIFIER, String MINER_KEY)
-            : DUCO_USER(DUCO_USER), RIG_IDENTIFIER(RIG_IDENTIFIER), MINER_KEY(MINER_KEY) {}
+    MiningConfig(String DUCO_USER, String RIG_IDENTIFIER)
+            : DUCO_USER(DUCO_USER), RIG_IDENTIFIER(RIG_IDENTIFIER) {}
 };
 
 class MiningJob {
@@ -346,8 +345,7 @@ private:
         
             client.print("JOB," +
                          String(config->DUCO_USER) +
-                         SEP_TOKEN + config->START_DIFF + 
-                         SEP_TOKEN + String(config->MINER_KEY) + 
+                         SEP_TOKEN + config->START_DIFF +  
                          SEP_TOKEN + "Temp:" + String(temp) + "*C" +
                          END_TOKEN);
         #elif defined(USE_DHT)
@@ -361,7 +359,6 @@ private:
             client.print("JOB," +
                          String(config->DUCO_USER) +
                          SEP_TOKEN + config->START_DIFF + 
-                         SEP_TOKEN + String(config->MINER_KEY) + 
                          SEP_TOKEN + "Temp:" + String(temp) + "*C" +
                          IOT_TOKEN + "Hum:" + String(hum) + "%" +
                          END_TOKEN);
@@ -373,8 +370,7 @@ private:
 
             client.print("JOB," +
                          String(config->DUCO_USER) +
-                         SEP_TOKEN + config->START_DIFF + 
-                         SEP_TOKEN + String(config->MINER_KEY) + 
+                         SEP_TOKEN + config->START_DIFF +  
                          SEP_TOKEN + "Temp:" + String(temp) + "*C" +
                          END_TOKEN);
         #elif defined(USE_INTERNAL_SENSOR)
@@ -387,14 +383,12 @@ private:
             client.print("JOB," +
                          String(config->DUCO_USER) +
                          SEP_TOKEN + config->START_DIFF + 
-                         SEP_TOKEN + String(config->MINER_KEY) + 
                          SEP_TOKEN + "CPU Temp:" + String(temp) + "*C" +
                          END_TOKEN);
         #else
             client.print("JOB," +
                          String(config->DUCO_USER) +
                          SEP_TOKEN + config->START_DIFF + 
-                         SEP_TOKEN + String(config->MINER_KEY) + 
                          END_TOKEN);
         #endif
 

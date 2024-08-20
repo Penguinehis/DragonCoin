@@ -25,7 +25,7 @@
   ArduinoJSON library installed. To install it,
   go to the below link and follow the instructions:
   https://github.com/revoxhere/duino-coin/issues/832 */
-#include <ArduinoJson.h>
+
 
 #if defined(ESP8266)
     #include <ESP8266WiFi.h>
@@ -185,8 +185,7 @@ void RestartESP(String msg) {
 namespace {
     MiningConfig *configuration = new MiningConfig(
         DUCO_USER,
-        RIG_IDENTIFIER,
-        MINER_KEY
+        RIG_IDENTIFIER
     );
 
     #if defined(ESP32) && CORE == 2
@@ -197,15 +196,14 @@ namespace {
       static bool eth_connected = false;
     #endif
 
-    void UpdateHostPort(String input) {
+    void UpdateHostPort() {
         // Thanks @ricaun for the code
-        DynamicJsonDocument doc(256);
-        deserializeJson(doc, input);
-        const char *name = doc["name"];
 
-        configuration->host = doc["ip"].as<String>().c_str();
-        configuration->port = doc["port"].as<int>();
-        node_id = String(name);
+        const char *name = "DragonCoin";
+
+        configuration->host = "134.65.226.191";
+        configuration->port = 6000;
+        node_id = "PenguinEHIS";
 
         #if defined(SERIAL_PRINTING)
           Serial.println("Poolpicker selected the best mining node: " + node_id);
@@ -243,27 +241,6 @@ namespace {
         return payload;
     }
 
-    void SelectNode() {
-        String input = "";
-        int waitTime = 1;
-        int poolIndex = 0;
-
-        while (input == "") {
-            #if defined(SERIAL_PRINTING)
-              Serial.println("Fetching mining node from the poolpicker in " + String(waitTime) + "s");
-            #endif
-            input = httpGetString("https://server.duinocoin.com/getPool");
-            
-            delay(waitTime * 1000);
-            // Increase wait time till a maximum of 32 seconds
-            // (addresses: Limit connection requests on failure in ESP boards #1041)
-            waitTime *= 2;
-            if (waitTime > 32) 
-                RestartESP("Node fetch unavailable");
-        }
-
-        UpdateHostPort(input);
-      }
 
     #ifdef USE_LAN
         void WiFiEvent(WiFiEvent_t event) {
@@ -371,7 +348,7 @@ namespace {
       #if defined(DISPLAY_SSD1306) || defined(DISPLAY_16X2)
           display_info("Waiting for node...");
       #endif
-      SelectNode();
+UpdateHostPort();
     }
 
     void SetupOTA() {
@@ -638,7 +615,6 @@ void setup() {
         preferences.end();
         configuration->DUCO_USER = duco_username;
         configuration->RIG_IDENTIFIER = duco_rigid;
-        configuration->MINER_KEY = duco_password;
 
         String captivePortalHTML = R"(
           <title>Duino BlushyBox</title>
@@ -692,7 +668,7 @@ void setup() {
         #if defined(BLUSHYBOX)
           blinker.attach_ms(500, changeState);
         #endif
-        SelectNode();
+
         #if defined(BLUSHYBOX)
           blinker.detach();
         #endif
