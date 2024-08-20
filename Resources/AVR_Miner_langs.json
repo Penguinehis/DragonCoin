@@ -1,6 +1,6 @@
 {
     "english": {
-        "translation_autor": "DragonCoin developers",
+        "translation_autor": "Duino-Coin developers",
         "sigint_detected": " SIGINT detected - Exiting gracefully.",
         "goodbye": " See you soon!",
         "greeting_morning": "Have a wonderful morning",
@@ -18,7 +18,7 @@
         "dont_have_account": "Don't have an DragonCoin account yet? Use ",
         "wallet": "Wallet",
         "register_warning": " to register on server.\n",
-        "ask_username": "Enter your DragonCoin username: ",
+        "ask_username": "Enter your DragonCoin Wallet: ",
         "ports_message": "Configuration tool has found the following ports:",
         "ports_notice": "If you can't see your board here, make sure the it is properly connected and the program has access to it (admin/sudo rights).",
         "ask_avrport": "Enter your board serial port (e.g. COM1 (Windows) or /dev/ttyUSB1 (Unix)): ",
